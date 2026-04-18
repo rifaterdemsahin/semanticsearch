@@ -1,0 +1,20 @@
+app = "semantic-search-qdrant"
+primary_region = "ams"
+
+[build]
+  image = "qdrant/qdrant:latest"
+
+[env]
+  QDRANT__SERVICE__GRPC_PORT = "6334"
+
+[mounts]
+  source = "qdrant_data"
+  destination = "/qdrant/storage"
+
+[http_service]
+  internal_port = 6333
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
