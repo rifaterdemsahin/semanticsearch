@@ -102,7 +102,67 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // 6. Dynamic Carousel (for 3_Simulation phase)
+    // 6. Semantic Search over Fly.io Data
+    const semanticBtn = document.getElementById('semantic-search-btn');
+    const overlay = document.getElementById('semantic-results-overlay');
+    const closeOverlay = document.getElementById('close-overlay');
+    const resultsList = document.getElementById('semantic-results-list');
+
+    semanticBtn.addEventListener('click', async () => {
+        const query = searchInput.value.trim();
+        if (!query) {
+            alert('Please enter a search query first.');
+            return;
+        }
+
+        overlay.classList.remove('hidden');
+        resultsList.innerHTML = `
+            <div class="loader-container">
+                <div class="loader"></div>
+                <p>Querying Fly.io Semantic Engine for "${query}"...</p>
+            </div>
+        `;
+
+        try {
+            // THE ACTUAL BACKEND CALL
+            const response = await fetch(`https://semanticsearch-backend.fly.dev/search?q=${encodeURIComponent(query)}`);
+            if (!response.ok) throw new Error('Search engine offline');
+            const results = await response.json();
+            renderSemanticResults(results);
+        } catch (err) {
+            resultsList.innerHTML = `
+                <div class="error-container">
+                    <p>❌ Error: ${err.message}</p>
+                    <button class="btn-secondary" onclick="location.reload()">Retry</button>
+                    <br><br>
+                    <small>Make sure the Fly.io backend is deployed and running.</small>
+                </div>
+            `;
+        }
+    });
+
+    closeOverlay.addEventListener('click', () => {
+        overlay.classList.add('hidden');
+    });
+
+    function renderSemanticResults(results) {
+        if (!results || results.length === 0) {
+            resultsList.innerHTML = '<p>No semantic matches found.</p>';
+            return;
+        }
+
+        resultsList.innerHTML = results.map(hit => `
+            <div class="semantic-item">
+                <div class="result-info">
+                    <h4>${hit.payload.name}</h4>
+                    <p>${hit.payload.category || 'General'}</p>
+                </div>
+                <div class="score-badge">${(hit.score * 100).toFixed(1)}% Match</div>
+            </div>
+        `).join('');
+    }
+
+    // 7. Dynamic Carousel (for 3_Simulation phase)
     if (window.location.search.includes('3_Simulation')) {
         initCarousel();
     }

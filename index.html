@@ -17,8 +17,13 @@
             </div>
             
             <div class="search-container">
-                <input type="text" id="site-search" placeholder="Search knowledge..." autocomplete="off">
-                <div id="search-results" class="search-results"></div>
+                <div class="search-box">
+                    <input type="text" id="site-search" placeholder="Search knowledge..." autocomplete="off">
+                    <button id="semantic-search-btn" class="btn-search" title="Semantic Search on Fly.io">
+                        <i data-lucide="zap"></i>
+                    </button>
+                    <div id="search-results" class="search-results"></div>
+                </div>
             </div>
 
             <div class="nav-controls">
@@ -40,6 +45,22 @@
     </header>
 
     <main>
+        <!-- Semantic Search Results Overlay -->
+        <div id="semantic-results-overlay" class="overlay hidden">
+            <div class="overlay-content">
+                <header class="overlay-header">
+                    <h2><i data-lucide="zap"></i> Semantic Search Results</h2>
+                    <button id="close-overlay" class="btn-icon"><i data-lucide="x"></i></button>
+                </header>
+                <div id="semantic-results-list" class="results-list">
+                    <div class="loader-container">
+                        <div class="loader"></div>
+                        <p>Scanning Fly.io Vector Database...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <section class="hero">
             <h1 class="premium-title">The Path from <span class="highlight">Unknown</span> to <span class="highlight">Proven</span></h1>
             <p class="subtitle">A modular framework for self-documenting AI engineering.</p>

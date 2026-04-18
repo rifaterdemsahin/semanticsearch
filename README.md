@@ -1,6 +1,7 @@
 # 🔍 Semantic Search | Self-Learning System
 
-✨ **Status:** [Proven] | 🚀 **Live Demo:** [https://rifaterdemsahin.github.io/semanticsearch/](https://rifaterdemsahin.github.io/semanticsearch/)
+✨ **Status:** [Proven]  
+🚀 **Live Demo:** [https://rifaterdemsahin.github.io/semanticsearch/index.html](https://rifaterdemsahin.github.io/semanticsearch/index.html)
 
 ## 🎯 Project Intent
 The goal of this project is to implement a robust proof-of-concept for semantic search using **Qdrant** and **Ollama**. It follows the **Project Self-Learning System** framework to ensure every step from problem definition to final validation is documented, tested, and reproducible.
