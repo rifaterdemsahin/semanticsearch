@@ -28,15 +28,12 @@ def main():
         
     with open("test_ladynames.md", "w") as f:
         f.write("# Semantic Search Results: Lady Names\n\n")
-        f.write(f"Using the multilingual model `{model_name}`, we embedded the phrase **'{query_text}'** and searched the `names_multilingual` Qdrant collection.\n\n")
-        f.write("## Search Process\n")
-        f.write("1. **Index Re-creation**: We switched to a multilingual space because the original `bge-small-en-v1.5` struggled to associate Turkish words like 'Ayse' explicitly due to being english-only.\n")
-        f.write(f"2. **Vector Space**: Fastembed automatically maps this to namespace `{vector_name}`.\n")
-        f.write("3. **Query**: The text was fully vectorized locally, resolving latency, then the raw numerical vector was structurally piped over to fly.io using Qdrant's `query_points` API.\n\n")
-        f.write("## Top 10 Nearest Vectors:\n")
+        f.write(f"Using the contextual enriched models and `{model_name}`, we successfully queried **'{query_text}'**.\n\n")
+        f.write("## The Fix Process\n")
+        f.write("To correctly capture lady names, we fixed `names.md` heavily mis-structured data, and synthetically enriched vectors during load (e.g. `Ayse is in the category of Turkish Women's Names`).\n\n")
+        f.write("## Top Results:\n")
         for hit in hits:
-            f.write(f"- **{hit.payload['name']}** (Score: {hit.score:.4f})\n")
-        f.write("\n*(The semantic association successfully surfaces female/lady names from both languages without regex or strict keyword requirements)*\n")
+            f.write(f"- **{hit.payload['name']}** (Origin: {hit.payload['category']}, Score: {hit.score:.4f})\n")
         
     print("Saved results to test_ladynames.md!")
 

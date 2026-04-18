@@ -14,21 +14,33 @@ def main():
         text = f.read()
 
     names = []
+    metadata = []
+    current_category = "Unknown"
+    
     for line in text.split("\n"):
-        match = re.match(r"^\d+\.\s+(.+)$", line.strip())
-        if match:
-            names.append(match.group(1).strip())
+        line = line.strip()
+        # Track active markdown heading
+        header_match = re.match(r"^#+\s+(.+)$", line)
+        if header_match:
+            current_category = header_match.group(1).strip()
+            continue
+            
+        name_match = re.match(r"^\d+\.\s+(.+)$", line)
+        if name_match:
+            raw_name = name_match.group(1).strip()
+            # Context substitution: embed "Ayse (Turkish Women's Names)"
+            enriched_context = f"{raw_name} is in the category of {current_category}"
+            names.append(enriched_context)
+            metadata.append({"name": raw_name, "category": current_category})
             
     print(f"Found {len(names)} names.")
-    metadata = [{"name": name} for name in names]
     
-    # We must explicitly recreate to clear old models
     client.recreate_collection(
         collection_name="names_multilingual",
         vectors_config=client.get_fastembed_vector_params()
     )
     
-    print("Uploading to Qdrant using multilingual model...")
+    print("Uploading to Qdrant using context-enriched models...")
     client.add(
         collection_name="names_multilingual",
         documents=names,

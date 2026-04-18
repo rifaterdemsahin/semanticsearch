@@ -1,10 +1,7 @@
 # Semantic Search Error Log
 
 ## Issue Identified
-When using the model `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` to query `"turkish lady names"`, the top results mistakenly surfaced male names heavily (e.g., `Mustafa` was the top result).
-
-## Expected Results
-The model should have correctly associated the semantic concept of a "lady" with the actual female names present in the dataset:
+When querying the Qdrant database for `"turkish lady names"`, the system incorrectly returned Turkish male names (e.g., `İsmail`, `Ahmet`, `Ömer`, etc.) instead of the expected lady names:
 - Ayse
 - Suyehla
 - Zeynep
@@ -12,9 +9,12 @@ The model should have correctly associated the semantic concept of a "lady" with
 - Caroline
 
 ## Root Cause Analysis
-1. **Model Capability**: The `MiniLM-L12` model is compact and lightweight, designed for basic paraphrasing and similarity. It lacks the deep, rich conceptual encoding required to intuitively link the isolated single-word string `"Ayse"` with the descriptive phrase `"turkish lady names"` without additional context.
-2. **Context Absence**: Since we are only feeding raw names (e.g., "Ayse") into the vector database rather than a descriptive phrase (e.g., "Ayse is a Turkish female name"), the model relies heavily on its internal pre-trained biases to map the vector for the name directly to the vector for the concept "lady names".
+1. **Context Collapse**: Bare names (e.g., "Ayse") as isolated strings lack explicit gender morphology in vector space. When queried with "turkish lady names", the phrase heavily associates with "turkish", retrieving the most common Turkish names in the dataset (which are predominantly male).
+2. **Incorrect Source Data Structure**: In the raw `names.md` file, the female names (`Ayse`, `Zeynep`, etc.) were appended under the header `### Turkish Men's Names`. Even if the model had contextual extraction, the local context labeled them as men.
+3. **Data Representation**: Vector databases do not magically add knowledge unless it is encoded in the textual representation fed to the embedder.
 
-## Proposed Fix
-1. **Switch to a Large-Scale, Robust Multilingual Model**: We will step up to `intfloat/multilingual-e5-large`. E5-Large is a heavily tuned sentence transformer explicitly designed to bridge the gap between queries and conceptually related passages using powerful zero-shot associations.
-2. **Re-index and Re-test**: We will re-embed the list with `intfloat/multilingual-e5-large` into a new collection and explicitly test if it can recover the female names from the raw list.
+## The Fix
+To natively support advanced semantic concepts like "lady names," the vector representations must contain entity context during ingestion:
+1. **Restructure `names.md`**: Move the female names under correctly labeled headers (`### Turkish Women's Names` and `### English Women's Names`).
+2. **Context Enriched Embedding**: Modify `load_names.py` so it parses the markdown headings. Instead of vectorizing just `"Ayse"`, it will vectorize `<NAME> - <CATEGORY>` (e.g., `"Ayse - Turkish Women's Names"`).
+3. **Re-index & Re-test**: By embedding the category alongside the name, any query for `"lady names"` will strongly align with the `"Women's Names"` conceptual vectors, instantly mapping the correct subset.
