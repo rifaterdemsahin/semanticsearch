@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Search | Self-Learning System</title>
+    <meta name="description" content="A self-documenting semantic search project using Qdrant and Ollama.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@500;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="dark-mode">
+    <header id="main-header">
+        <nav class="top-nav">
+            <div class="logo">
+                <span class="gradient-text">Semantic Search</span>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" id="site-search" placeholder="Search knowledge..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+
+            <div class="nav-controls">
+                <button id="debug-toggle" class="btn-icon" title="Toggle Debug Mode">
+                    <i data-lucide="bug"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Menu 1: Debug Navigation (Visible when debug=true) -->
+        <nav id="debug-menu" class="debug-menu hidden">
+            <div id="debug-links" class="menu-items"></div>
+        </nav>
+
+        <!-- Menu 2: Content Navigation -->
+        <nav id="content-menu" class="content-menu">
+            <div id="content-links" class="menu-items"></div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1 class="premium-title">The Path from <span class="highlight">Unknown</span> to <span class="highlight">Proven</span></h1>
+            <p class="subtitle">A modular framework for self-documenting AI engineering.</p>
+            
+            <div class="cta-group">
+                <a href="#journey" class="btn-primary">Explore Journey</a>
+                <a href="https://github.com/rifaterdemsahin/semanticsearch" class="btn-secondary">
+                    <i data-lucide="github"></i> Repository
+                </a>
+            </div>
+        </section>
+
+        <section id="journey" class="journey-grid">
+            <!-- Journey cards will be rendered here -->
+        </section>
+
+        <section class="social-footer">
+            <a href="https://www.linkedin.com/in/rifaterdemsahin/" target="_blank" class="social-link">
+                <i data-lucide="linkedin"></i> LinkedIn
+            </a>
+            <a href="https://www.youtube.com/@RifatErdemSahin" target="_blank" class="social-link">
+                <i data-lucide="youtube"></i> YouTube
+            </a>
+        </section>
+    </main>
+
+    <script src="nav.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

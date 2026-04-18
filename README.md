@@ -1,19 +1,44 @@
-# semanticsearch
-Semantic Search implementation using Qdrant deployed on Fly.io.
+# 🔍 Semantic Search | Self-Learning System
 
-## Overview
-This project demonstrates setting up a scalable vector search pipeline. We have:
-1. Created an initial dataset (`names.md`) of varying names.
-2. Secured deployment credentials using **Doppler**.
-3. Deployed a persistent **Qdrant** database on **Fly.io** (`semantic-search-qdrant`).
-4. Used `fastembed` with the `BAAI/bge-small-en-v1.5` embeddings model to vectorize the names and insert them into the database.
+✨ **Status:** [Proven] | 🚀 **Live Demo:** [https://rifaterdemsahin.github.io/semanticsearch/](https://rifaterdemsahin.github.io/semanticsearch/)
 
-## Results of the Semantic Search
-When extracting the top vectors matching the concept of **"lady names"** using our python query script (`search.py`), the Qdrant vector database yielded the following semantic proximity results:
-- Caroline (score: 0.6944)
-- William (score: 0.6705)
-- George (score: 0.6657)
-- Christopher (score: 0.6657)
-- Charles (score: 0.6552)
+## 🎯 Project Intent
+The goal of this project is to implement a robust proof-of-concept for semantic search using **Qdrant** and **Ollama**. It follows the **Project Self-Learning System** framework to ensure every step from problem definition to final validation is documented, tested, and reproducible.
 
-*(See `environment.md` for a full breakdown of the environment deployment steps)*
+---
+
+## 📂 7-Stage Journey
+
+### [1_Real_Unknown](https://rifaterdemsahin.github.io/semanticsearch/markdown_renderer.html?file=1_Real_Unknown/README.md)
+**The "Why".** Problem definitions, OKRs, and core questions regarding the search accuracy and performance.
+
+### [2_Environment](https://rifaterdemsahin.github.io/semanticsearch/markdown_renderer.html?file=2_Environment/README.md)
+**The "Context".** Setup guides for Mac M1, Docker configurations, and AI client integrations (Ollama/Claude).
+
+### [3_Simulation](https://rifaterdemsahin.github.io/semanticsearch/markdown_renderer.html?file=3_Simulation/README.md)
+**The "Vision".** UI mockups and dynamic presentations of the search interface.
+
+### [4_Formula](https://rifaterdemsahin.github.io/semanticsearch/markdown_renderer.html?file=4_Formula/README.md)
+**The "Recipe".** Embedding models selection (`nomic-embed-text`), dimension tuning (4096), and distance metrics.
+
+### [5_Symbols](https://rifaterdemsahin.github.io/semanticsearch/markdown_renderer.html?file=5_Symbols/README.md)
+**The "Reality".** Core source code, Qdrant collection management, and Fly.io deployment scripts.
+
+### [6_Semblance](https://rifaterdemsahin.github.io/semanticsearch/markdown_renderer.html?file=6_Semblance/README.md)
+**The "Scars".** Troubleshooting logs (e.g., multilingual ambiguity fixes) and context collapse workarounds.
+
+### [7_Testing_Known](https://rifaterdemsahin.github.io/semanticsearch/markdown_renderer.html?file=7_Testing_Known/README.md)
+**The "Proof".** Final validation results, score benchmarks, and outcome confirmation.
+
+---
+
+## 🛠 Tech Stack
+- **Vector DB:** Qdrant
+- **Inference:** Ollama (`nomic-embed-text`)
+- **Hosting:** Fly.io & GitHub Pages
+- **Secrets:** Doppler
+- **CI/CD:** GitHub Actions
+
+## 🔗 Socials
+- **LinkedIn:** [rifaterdemsahin](https://www.linkedin.com/in/rifaterdemsahin/) 🔗
+- **YouTube:** [@RifatErdemSahin](https://www.youtube.com/@RifatErdemSahin) 📺

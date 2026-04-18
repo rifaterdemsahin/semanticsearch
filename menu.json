@@ -1,0 +1,24 @@
+{
+  "navigation": [
+    { "name": "1_Real", "path": "1_Real_Unknown" },
+    { "name": "2_Environment", "path": "2_Environment" },
+    { "name": "3_Simulation", "path": "3_Simulation" },
+    { "name": "4_Formula", "path": "4_Formula" },
+    { "name": "5_Symbols", "path": "5_Symbols" },
+    { "name": "6_Semblance", "path": "6_Semblance" },
+    { "name": "7_Testing", "path": "7_Testing_Known" }
+  ],
+  "content": [
+    { "name": "Home", "path": "index.html" },
+    { "name": "Gemini", "path": "gemini.md" },
+    { "name": "Claude", "path": "claude.md" },
+    { "name": "Copilot", "path": "copilot.md" },
+    { "name": "KiloCode", "path": "kilocode.md" },
+    { "name": "Aigent", "path": "aigent.md" }
+  ],
+  "social": {
+    "github": "https://github.com/rifaterdemsahin/semanticsearch",
+    "linkedin": "https://www.linkedin.com/in/rifaterdemsahin/",
+    "youtube": "https://www.youtube.com/@RifatErdemSahin"
+  }
+}
