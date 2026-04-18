@@ -134,6 +134,37 @@ header {
     align-items: center;
 }
 
+.header-actions {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.btn-small {
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.8rem !important;
+}
+
+.spin {
+    animation: rotation 1s linear infinite;
+}
+
+.semantic-item.clickable {
+    cursor: pointer;
+}
+
+.snippet {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin: 0.5rem 0;
+}
+
+.path {
+    font-size: 0.75rem;
+    opacity: 0.6;
+    font-family: monospace;
+}
+
 .results-list {
     padding: 2rem;
     overflow-y: auto;

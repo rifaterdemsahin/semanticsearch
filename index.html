@@ -50,7 +50,15 @@
             <div class="overlay-content">
                 <header class="overlay-header">
                     <h2><i data-lucide="zap"></i> Semantic Search Results</h2>
-                    <button id="close-overlay" class="btn-icon"><i data-lucide="x"></i></button>
+                    <div class="header-actions">
+                        <button id="check-connection-btn" class="btn-secondary btn-small" title="Verify Fly.io Status">
+                            <i data-lucide="activity"></i> Check
+                        </button>
+                        <button id="index-repo-btn" class="btn-secondary btn-small" title="Trigger Knowledge Indexing">
+                            <i data-lucide="refresh-cw"></i> Index
+                        </button>
+                        <button id="close-overlay" class="btn-icon"><i data-lucide="x"></i></button>
+                    </div>
                 </header>
                 <div id="semantic-results-list" class="results-list">
                     <div class="loader-container">

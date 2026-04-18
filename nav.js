@@ -107,6 +107,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const overlay = document.getElementById('semantic-results-overlay');
     const closeOverlay = document.getElementById('close-overlay');
     const resultsList = document.getElementById('semantic-results-list');
+    const checkConnBtn = document.getElementById('check-connection-btn');
+    const indexRepoBtn = document.getElementById('index-repo-btn');
+
+    const BACKEND_URL = "https://semanticsearch-backend.fly.dev";
 
     semanticBtn.addEventListener('click', async () => {
         const query = searchInput.value.trim();
@@ -124,8 +128,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
 
         try {
-            // THE ACTUAL BACKEND CALL
-            const response = await fetch(`https://semanticsearch-backend.fly.dev/search?q=${encodeURIComponent(query)}`);
+            const response = await fetch(`${BACKEND_URL}/search?q=${encodeURIComponent(query)}`);
             if (!response.ok) throw new Error('Search engine offline');
             const results = await response.json();
             renderSemanticResults(results);
@@ -133,11 +136,43 @@ document.addEventListener('DOMContentLoaded', async () => {
             resultsList.innerHTML = `
                 <div class="error-container">
                     <p>❌ Error: ${err.message}</p>
-                    <button class="btn-secondary" onclick="location.reload()">Retry</button>
+                    <button class="btn-secondary" id="retry-btn">Retry</button>
                     <br><br>
                     <small>Make sure the Fly.io backend is deployed and running.</small>
                 </div>
             `;
+            document.getElementById('retry-btn').onclick = () => semanticBtn.click();
+        }
+    });
+
+    checkConnBtn.addEventListener('click', async () => {
+        checkConnBtn.innerHTML = '<i data-lucide="loader" class="spin"></i> ...';
+        lucide.createIcons();
+        try {
+            const response = await fetch(`${BACKEND_URL}/check_connection`);
+            const data = await response.json();
+            alert(`Backend Status: ${data.status}\nQdrant: ${data.qdrant}\nModel: ${data.model}`);
+        } catch (err) {
+            alert(`Connection Failed: ${err.message}`);
+        } finally {
+            checkConnBtn.innerHTML = '<i data-lucide="activity"></i> Check';
+            lucide.createIcons();
+        }
+    });
+
+    indexRepoBtn.addEventListener('click', async () => {
+        if(!confirm('This will trigger a full re-indexing of the repository. Continue?')) return;
+        indexRepoBtn.innerHTML = '<i data-lucide="loader" class="spin"></i> ...';
+        lucide.createIcons();
+        try {
+            const response = await fetch(`${BACKEND_URL}/index`, { method: 'POST' });
+            const data = await response.json();
+            alert(`Indexing Status: ${data.status}`);
+        } catch (err) {
+            alert(`Indexing Failed: ${err.message}`);
+        } finally {
+            indexRepoBtn.innerHTML = '<i data-lucide="refresh-cw"></i> Index';
+            lucide.createIcons();
         }
     });
 
@@ -147,15 +182,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function renderSemanticResults(results) {
         if (!results || results.length === 0) {
-            resultsList.innerHTML = '<p>No semantic matches found.</p>';
+            resultsList.innerHTML = '<p>No semantic matches found. Try clicking "Index" to update the knowledge base.</p>';
             return;
         }
 
         resultsList.innerHTML = results.map(hit => `
-            <div class="semantic-item">
+            <div class="semantic-item clickable" onclick="window.location.href='markdown_renderer.html?file=${hit.payload.path}'">
                 <div class="result-info">
                     <h4>${hit.payload.name}</h4>
-                    <p>${hit.payload.category || 'General'}</p>
+                    <p class="snippet">${hit.payload.snippet}...</p>
+                    <small class="path">${hit.payload.path}</small>
                 </div>
                 <div class="score-badge">${(hit.score * 100).toFixed(1)}% Match</div>
             </div>
