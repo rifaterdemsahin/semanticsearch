@@ -2,7 +2,7 @@ from fastembed import TextEmbedding
 from qdrant_client import QdrantClient
 
 def main():
-    model_name = "intfloat/multilingual-e5-large"
+    model_name = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
     print(f"Generating multilingual embedding for 'turkish lady names' using {model_name}...")
     model = TextEmbedding(model_name)
     
