@@ -68,11 +68,41 @@ header {
     transition: all 0.3s ease;
 }
 
-#site-search:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
 }
 
+.search-item {
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.search-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--primary);
+}
+
+.search-item small {
+    background: var(--glass);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+}
 .debug-menu, .content-menu {
     border-top: 1px solid var(--border);
     padding: 0.5rem 2rem;

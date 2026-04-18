@@ -73,13 +73,53 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // 5. Simple Search Implementation
+    // 5. Search with Autocomplete
     const searchInput = document.getElementById('site-search');
+    const searchResults = document.getElementById('search-results');
+    
     searchInput.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase();
-        // Implementation for simple search placeholder
-        if(query.length > 2) {
-            console.log('Searching for:', query);
-        }
+        searchResults.innerHTML = '';
+        if (query.length < 2) return;
+
+        const allLinks = [
+            ...data.navigation.map(n => ({...n, type: 'Phase'})),
+            ...data.content.map(c => ({...c, type: 'Page'}))
+        ];
+
+        const filtered = allLinks.filter(l => l.name.toLowerCase().includes(query));
+        
+        filtered.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'search-item';
+            div.innerHTML = `<span>${item.name}</span> <small>${item.type}</small>`;
+            div.onclick = () => {
+                window.location.href = item.path.endsWith('.md') 
+                    ? `markdown_renderer.html?file=${item.path}` 
+                    : (item.path.includes('_') ? `markdown_renderer.html?file=${item.path}/README.md` : item.path);
+            };
+            searchResults.appendChild(div);
+        });
     });
+
+    // 6. Dynamic Carousel (for 3_Simulation phase)
+    if (window.location.search.includes('3_Simulation')) {
+        initCarousel();
+    }
+
+    async function initCarousel() {
+        // Placeholder for automatic image discovery (would typically use a JSON index)
+        const contentDiv = document.getElementById('content');
+        if (!contentDiv) return;
+        
+        const carouselHtml = `
+            <div class="carousel-container">
+                <div class="carousel-slide">
+                    <img src="3_Simulation/fast_embed.png" alt="Fast Embed Visualization">
+                </div>
+                <!-- Future images will be appended here -->
+            </div>
+        `;
+        contentDiv.insertAdjacentHTML('afterbegin', carouselHtml);
+    }
 });
