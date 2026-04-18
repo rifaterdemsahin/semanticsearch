@@ -14,5 +14,7 @@ COPY . .
 
 EXPOSE 8000
 
-# Run uvicorn pointing to the backend module in 5_Symbols
-CMD ["uvicorn", "5_Symbols.backend:app", "--host", "0.0.0.0", "--port", "8000"]
+# Copy backend to root so uvicorn can import it (5_Symbols is not a valid Python package name)
+RUN cp 5_Symbols/backend.py backend.py
+
+CMD ["uvicorn", "backend:app", "--host", "0.0.0.0", "--port", "8000"]
