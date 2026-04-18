@@ -5,7 +5,7 @@ def main():
     print("Connecting to Qdrant...")
     client = QdrantClient("https://semantic-search-qdrant.fly.dev", port=443)
     
-    model_name = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    model_name = "intfloat/multilingual-e5-large"
     print(f"Setting multilingual model: {model_name}")
     client.set_model(model_name)
     
